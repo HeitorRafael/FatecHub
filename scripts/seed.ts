@@ -1,17 +1,19 @@
-require('dotenv').config({ path: '.env.local' });
+import { PrismaClient } from '@prisma/client';
+import { PgDataSource } from '@prisma/adapter-pg';
+import bcryptjs from 'bcryptjs';
+import { Pool } from 'pg';
 
-const { PrismaClient } = require('@prisma/client');
-const bcryptjs = require('bcryptjs');
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+});
 
-const prisma = new PrismaClient();
+const adapter = new PgDataSource(pool);
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   console.log('🌱 Criando dados iniciais...\n');
 
   try {
-    // Limpar dados anteriores (opcional)
-    // await prisma.user.deleteMany({});
-
     const hashPassword = await bcryptjs.hash('admin123', 10);
 
     // Criar Admin
@@ -66,7 +68,7 @@ async function main() {
         empresa: {
           create: {
             nomeEmpresa: 'Tech Solutions Ltda',
-            enderecoEmpresa: 'Rua das Flores, 123 - São Paulo, SP',
+           enderecoEmpresa: 'Rua das Flores, 123 - São Paulo, SP',
             telefoneContato: '(11) 3456-7890',
             emailContato: 'contato@empresa.com',
           },
