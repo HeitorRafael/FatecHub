@@ -1,0 +1,275 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ========== ENUMS ==========
+
+enum UserRole {
+  ADMIN
+  ESTUDANTE
+  EMPRESA
+}
+
+enum ServicoTipo {
+  DESIGN
+  DESENVOLVIMENTO
+  CONSULTORIA
+  MARKETING
+  GESTAO_PROJETOS
+  ANALISE_DADOS
+  TRADUCAO
+  REDACAO
+  TUTORIA
+  OUTRO
+}
+
+enum FaixaPreco {
+  VINTE_CINQUENTA       // 20-50
+  CINQUENTA_CEM         // 50-100
+  CEM_DUZENTOS          // 100-200
+  DUZENTOS_QUINHENTOS   // 200-500
+  QUINHENTOS_MIL        // 500-1000
+}
+
+enum StatusContrato {
+  AGUARDANDO_INICIO
+  EM_ANDAMENTO
+  CONCLUIDO
+  CANCELADO
+}
+
+enum StatusServico {
+  ATIVO
+  PAUSADO
+  ENCERRADO
+  ARCHIVED
+}
+
+// ========== CORE MODELS ==========
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  passwordHash  String
+  nome          String
+  foto          String?
+  role          UserRole
+  
+  // Soft Delete
+  deletedAt     DateTime?
+  
+  // Timestamps
+  criadoEm      DateTime @default(now())
+  atualizadoEm  DateTime @updatedAt
+
+  // Relacionamentos
+  admin         Admin?
+  estudante     Estudante?
+  empresa       Empresa?
+
+  @@map("users")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  criadoEm  DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+
+  @@map("admins")
+}
+
+model Estudante {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  ra                    String   @unique
+  emailSecundario       String?
+  telefoneMestre        String
+  mestre                String    // Nome do mestre/instrutor
+  curso                 String
+  
+  pontuacao             Int      @default(0)
+  acessosCount          Int      @default(0)
+  ultimoAcesso          DateTime?
+  
+  // Relacionamentos
+  inscricoes            Inscricao[]
+  contratos             Contrato[]
+  feedbacksRecebidos    Feedback[]
+  certificados          Certificado[]
+  
+  criadoEm              DateTime @default(now())
+  atualizadoEm          DateTime @updatedAt
+
+  @@map("estudantes")
+}
+
+model Empresa {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  nomeEmpresa           String
+  enderecoEmpresa       String
+  telefoneContato       String   @unique
+  emailContato          String
+  acessosCount          Int      @default(0)
+  ultimoAcesso          DateTime?
+  
+  // Relacionamentos
+  servicos              Servico[]
+  contratos             Contrato[]
+  
+  criadoEm              DateTime @default(now())
+  atualizadoEm          DateTime @updatedAt
+
+  @@map("empresas")
+}
+
+// ========== SERVICOS E APLICACOES ==========
+
+model Servico {
+  id                    String   @id @default(cuid())
+  empresaId             String
+  empresa               Empresa  @relation(fields: [empresaId], references: [id], onDelete: Cascade)
+  
+  titulo                String
+  tipo                  ServicoTipo
+  descricao             String
+  faixaPreco            FaixaPreco
+  imagemUrl             String?
+  
+  dataInicio            DateTime
+  dataFim               DateTime
+  duracao               Int      // em semanas (máximo 4)
+  
+  status                StatusServico @default(ATIVO)
+  
+  // Relacionamentos
+  inscricoes            Inscricao[]
+  contrato              Contrato?
+  
+  criadoEm              DateTime @default(now())
+  atualizadoEm          DateTime @updatedAt
+
+  @@map("servicos")
+}
+
+model Inscricao {
+  id                    String   @id @default(cuid())
+  servicoId             String
+  servico               Servico  @relation(fields: [servicoId], references: [id], onDelete: Cascade)
+  
+  estudanteId           String
+  estudante             Estudante @relation(fields: [estudanteId], references: [id], onDelete: Cascade)
+  
+  dataInscricao         DateTime @default(now())
+  horaInscricao         String   // formato HH:MM
+  anonimoParaEmpresa    Boolean  @default(true)
+  
+  criadoEm              DateTime @default(now())
+
+  @@unique([servicoId, estudanteId])
+  @@map("inscricoes")
+}
+
+model Contrato {
+  id                    String   @id @default(cuid())
+  servicoId             String   @unique
+  servico               Servico  @relation(fields: [servicoId], references: [id], onDelete: Cascade)
+  
+  empresaId             String
+  empresa               Empresa  @relation(fields: [empresaId], references: [id])
+  
+  estudanteId           String
+  estudante             Estudante @relation(fields: [estudanteId], references: [id])
+  
+  status                StatusContrato @default(AGUARDANDO_INICIO)
+  
+  dataAceite            DateTime
+  dataConclusao         DateTime?
+  
+  prazoMaximoAvaliacao  DateTime // 30 dias após conclusão
+  
+  // Relacionamentos
+  feedback              Feedback?
+  
+  criadoEm              DateTime @default(now())
+  atualizadoEm          DateTime @updatedAt
+
+  @@unique([servicoId, estudanteId])
+  @@map("contratos")
+}
+
+model Feedback {
+  id                    String   @id @default(cuid())
+  contratoId            String   @unique
+  contrato              Contrato @relation(fields: [contratoId], references: [id], onDelete: Cascade)
+  
+  estudanteId           String
+  estudante             Estudante @relation(fields: [estudanteId], references: [id])
+  
+  notacao               Float    // 1 a 5
+  descricao             String
+  
+  aprovadoPorAdmin      Boolean  @default(false)
+  dataAprovacao         DateTime?
+  
+  // Para carrossel de testimonials (máximo 10)
+  posicaoCarrossel      Int?
+  
+  criadoEm              DateTime @default(now())
+  atualizadoEm          DateTime @updatedAt
+
+  @@map("feedbacks")
+}
+
+model Certificado {
+  id                    String   @id @default(cuid())
+  estudanteId           String
+  estudante             Estudante @relation(fields: [estudanteId], references: [id], onDelete: Cascade)
+  
+  titulo                String
+  descricao             String
+  dataEmissao           DateTime @default(now())
+
+  @@map("certificados")
+}
+
+// ========== UTILIDADES ==========
+
+model MensagemInspiracao {
+  id                    String   @id @default(cuid())
+  titulo                String
+  conteudo              String
+  ativo                 Boolean  @default(true)
+  
+  criadoEm              DateTime @default(now())
+  atualizadoEm          DateTime @updatedAt
+
+  @@map("mensagens_inspiracao")
+}
+
+model AuditLog {
+  id                    String   @id @default(cuid())
+  usuarioId             String
+  acao                  String
+  tabela                String
+  descricao             String
+  
+  criadoEm              DateTime @default(now())
+
+  @@map("audit_logs")
+}
