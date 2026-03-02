@@ -5,7 +5,7 @@ import { prisma } from '@/lib/db/client';
 export async function GET(request: NextRequest) {
     try {
         const { searchParams } = new URL(request.url);
-        
+
         // Parâmetros de filtro
         const tipo = searchParams.get('tipo');
         const faixaPreco = searchParams.get('faixaPreco');

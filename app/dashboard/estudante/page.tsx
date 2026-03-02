@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 import { AuthUser } from '@/types';
 import { useEstudanteStats } from '@/hooks/useEstudanteStats';
 import { useServicosBrowse } from '@/hooks/useServicosBrowse';
+import { useInscricoes } from '@/hooks/useInscricoes';
+import CandidatarModal from '@/components/inscricoes/CandidatarModal';
+import SucessoModal from '@/components/inscricoes/SucessoModal';
 
 export default function EstudanteDashboard() {
     const [user, setUser] = useState<AuthUser | null>(null);
@@ -15,9 +18,14 @@ export default function EstudanteDashboard() {
         search: '',
     });
     const [page, setPage] = useState(1);
+    const [candidaturaSelecionada, setCandidaturaSelecionada] = useState<any>(null);
+    const [isCandidatarModalOpen, setIsCandidatarModalOpen] = useState(false);
+    const [isSucessoModalOpen, setIsSucessoModalOpen] = useState(false);
+    const [isCandidating, setIsCandidating] = useState(false);
     const router = useRouter();
     const { stats, loading: statsLoading } = useEstudanteStats();
     const { servicos, pagination, loading: servicosLoading, fetchServicos } = useServicosBrowse();
+    const { candidatar, jaSeCandidata } = useInscricoes();
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -82,8 +90,50 @@ export default function EstudanteDashboard() {
         handleFilterChange('search', value);
     };
 
+    const handleOpenCandidatarModal = (servico: any) => {
+        setCandidaturaSelecionada(servico);
+        setIsCandidatarModalOpen(true);
+    };
+
+    const handleConfirmCandidatura = async () => {
+        if (!candidaturaSelecionada) return;
+
+        setIsCandidating(true);
+        try {
+            await candidatar(candidaturaSelecionada.id);
+            setIsCandidatarModalOpen(false);
+            setIsSucessoModalOpen(true);
+        } catch (err) {
+            console.error('Erro ao candidatar:', err);
+            // Modal de erro é mostrado dentro do CandidatarModal
+        } finally {
+            setIsCandidating(false);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-gray-50">
+            {/* Modals */}
+            <CandidatarModal
+                isOpen={isCandidatarModalOpen}
+                servicoTitulo={candidaturaSelecionada?.titulo || ''}
+                empresaNome={candidaturaSelecionada?.empresa?.nomeEmpresa || ''}
+                onClose={() => {
+                    setIsCandidatarModalOpen(false);
+                    setCandidaturaSelecionada(null);
+                }}
+                onConfirm={handleConfirmCandidatura}
+                isLoading={isCandidating}
+            />
+            <SucessoModal
+                isOpen={isSucessoModalOpen}
+                servicoTitulo={candidaturaSelecionada?.titulo || ''}
+                onClose={() => {
+                    setIsSucessoModalOpen(false);
+                    setCandidaturaSelecionada(null);
+                }}
+            />
+
             {/* Header Sofisticado */}
             <nav className="bg-red-600 border-b-4 border-red-700 shadow-lg">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-5">
@@ -284,8 +334,16 @@ export default function EstudanteDashboard() {
                                         </div>
 
                                         {/* Botão */}
-                                        <button className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-semibold">
-                                            Candidatar-se
+                                        <button
+                                            onClick={() => handleOpenCandidatarModal(servico)}
+                                            disabled={jaSeCandidata(servico.id)}
+                                            className={`w-full px-4 py-2 rounded-lg transition font-semibold ${
+                                                jaSeCandidata(servico.id)
+                                                    ? 'bg-gray-300 text-gray-600 cursor-not-allowed opacity-60'
+                                                    : 'bg-red-600 text-white hover:bg-red-700'
+                                            }`}
+                                        >
+                                            {jaSeCandidata(servico.id) ? '✓ Já se candidatou' : 'Candidatar-se'}
                                         </button>
                                     </div>
                                 ))}
