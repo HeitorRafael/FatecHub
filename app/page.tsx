@@ -1,5 +1,3 @@
-import { redirect } from 'next/navigation';
+// Re-export da página de autenticação como página raiz
+export { default } from './(auth)/page';
 
-export default function Home() {
-  redirect('/(auth)');
-}
