@@ -30,8 +30,8 @@ export default function AuthTabs() {
                 <button
                     onClick={() => setActiveTab('login')}
                     className={`px-4 py-2 rounded-lg font-bold transition-all ${activeTab === 'login'
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-gray-300 text-gray-900 hover:bg-gray-400'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-300 text-gray-900 hover:bg-gray-400'
                         }`}
                 >
                     Login
@@ -39,8 +39,8 @@ export default function AuthTabs() {
                 <button
                     onClick={() => setActiveTab('register-estudante')}
                     className={`px-4 py-2 rounded-lg font-bold transition-all ${activeTab === 'register-estudante'
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-gray-300 text-gray-900 hover:bg-gray-400'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-300 text-gray-900 hover:bg-gray-400'
                         }`}
                 >
                     Estudante
@@ -48,8 +48,8 @@ export default function AuthTabs() {
                 <button
                     onClick={() => setActiveTab('register-empresa')}
                     className={`px-4 py-2 rounded-lg font-bold transition-all ${activeTab === 'register-empresa'
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-gray-300 text-gray-900 hover:bg-gray-400'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-gray-300 text-gray-900 hover:bg-gray-400'
                         }`}
                 >
                     Empresa

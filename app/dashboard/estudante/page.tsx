@@ -44,22 +44,26 @@ export default function EstudanteDashboard() {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <nav className="bg-white shadow">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-6">
+            {/* Header Sofisticado */}
+            <nav className="bg-red-600 border-b-4 border-red-700 shadow-lg">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-5">
                     <div className="flex justify-between items-center">
-                        <h1 className="text-xl sm:text-2xl font-bold text-gray-800">FatecHub</h1>
+                        <div>
+                            <h1 className="text-3xl font-black text-white">FatecHub</h1>
+                            <p className="text-xs text-red-100 font-semibold mt-1">Portal do Estudante</p>
+                        </div>
 
                         <div className="flex items-center gap-3 sm:gap-4 md:gap-6">
                             {user && (
                                 <div className="flex items-center gap-2 sm:gap-3">
                                     <div className="flex flex-col items-end">
-                                        <p className="text-xs sm:text-sm md:text-base font-semibold text-gray-800 truncate">
+                                        <p className="text-xs sm:text-sm md:text-base font-bold text-white truncate">
                                             {user.nome}
                                         </p>
-                                        <p className="text-xs text-gray-500">Estudante</p>
+                                        <p className="text-xs text-red-100 font-semibold">Estudante</p>
                                     </div>
 
-                                    <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-xs sm:text-sm flex-shrink-0">
+                                    <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center text-white font-bold text-xs sm:text-sm flex-shrink-0 border-2 border-gray-200 shadow-md">
                                         {user.foto ? (
                                             <img
                                                 src={user.foto}
@@ -75,48 +79,62 @@ export default function EstudanteDashboard() {
 
                             <button
                                 onClick={handleLogout}
-                                className="px-3 sm:px-4 py-1.5 sm:py-2 bg-red-600 text-white text-xs sm:text-sm rounded hover:bg-red-700 transition whitespace-nowrap"
+                                className="px-6 py-3.5 bg-gray-900 text-white text-xs sm:text-sm rounded-lg hover:bg-black transition font-semibold whitespace-nowrap shadow-md border-4 border-gray-700 hover:border-gray-600 cursor-pointer active:scale-95"
                             >
-                                Logout
+                                🚪 Logout
                             </button>
                         </div>
                     </div>
                 </div>
             </nav>
 
-            <div className="max-w-7xl mx-auto p-8">
-                <h2 className="text-3xl font-bold mb-8">Bem-vindo ao Dashboard do Estudante</h2>
-
-                {/* Carrossel de Oportunidades */}
+            <div className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
+                {/* Welcome Section */}
                 <div className="mb-8">
-                    <h3 className="text-2xl font-bold mb-4">Oportunidades Disponíveis</h3>
-                    <div className="bg-white rounded-lg shadow p-8 text-center text-gray-500">
-                        Nenhuma oportunidade disponível no momento
+                    <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-2">Bem-vindo ao Dashboard</h2>
+                    <div className="h-1 w-20 bg-red-600 rounded-full"></div>
+                </div>
+
+                {/* Oportunidades */}
+                <div className="mb-8">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="w-4 h-4 bg-red-600 rounded-full"></div>
+                        <h3 className="text-2xl font-black text-gray-900">Oportunidades Disponíveis</h3>
+                    </div>
+                    <div className="bg-white rounded-xl shadow-md border-l-4 border-red-600 p-8 text-center">
+                        <p className="text-gray-500 font-medium">Nenhuma oportunidade disponível no momento</p>
                     </div>
                 </div>
 
-                {/* Mensagens de Inspiração */}
+                {/* Inspiração Banner */}
                 <div className="mb-8">
-                    <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg p-8 text-center">
-                        <p className="text-lg">
-                            💡 "Não menospreze as oportunidades oferecidas. Construir seu portfólio é essencial para sua carreira!"
+                    <div className="bg-white rounded-xl p-8 sm:p-12 text-center shadow-lg border-2 border-red-600">
+                        <p className="text-lg sm:text-xl text-gray-900 font-semibold leading-relaxed">
+                            💡 <span className="text-red-600">Não menospreze as oportunidades</span> oferecidas. Construir seu portfólio é essencial para sua carreira profissional!
                         </p>
                     </div>
                 </div>
 
                 {/* Tipos de Serviço */}
                 <div>
-                    <h3 className="text-2xl font-bold mb-4">Tipos de Serviço</h3>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    <div className="flex items-center gap-3 mb-4">
+                        <div className="w-4 h-4 bg-gray-900 rounded-full"></div>
+                        <h3 className="text-2xl font-black text-gray-900">Filtrar por Tipo de Serviço</h3>
+                    </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
                         {[
-                            'Design',
-                            'Desenvolvimento',
-                            'Consultoria',
-                            'Marketing',
-                            'Outras'
+                            { icon: '🎨', label: 'Design' },
+                            { icon: '💻', label: 'Desenvolvimento' },
+                            { icon: '💼', label: 'Consultoria' },
+                            { icon: '📢', label: 'Marketing' },
+                            { icon: '⭐', label: 'Outras' }
                         ].map((tipo) => (
-                            <button key={tipo} className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg hover:bg-gray-50 transition">
-                                {tipo}
+                            <button
+                                key={tipo.label}
+                                className="bg-white rounded-xl shadow-md p-4 sm:p-6 text-center hover:shadow-lg hover:bg-gray-50 transition border-t-4 border-gray-400 font-semibold text-sm sm:text-base text-gray-900 group"
+                            >
+                                <div className="text-3xl sm:text-4xl mb-2 group-hover:scale-110 transition">{tipo.icon}</div>
+                                {tipo.label}
                             </button>
                         ))}
                     </div>
