@@ -44,6 +44,7 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
 
             const data = await res.json();
             localStorage.setItem('authToken', data.token);
+            localStorage.setItem('userData', JSON.stringify(data.user));
             onSuccess(data.user.role);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Erro ao registrar');

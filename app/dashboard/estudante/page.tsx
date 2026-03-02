@@ -1,27 +1,86 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { AuthUser } from '@/types';
 
 export default function EstudanteDashboard() {
+  const [user, setUser] = useState<AuthUser | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('authToken');
+      const userData = localStorage.getItem('userData');
+      
+      if (!token) {
+        router.push('/');
+      } else if (userData) {
+        try {
+          const parsedUser = JSON.parse(userData);
+          setUser(parsedUser);
+        } catch (error) {
+          console.error('Erro ao parsear dados do usuário:', error);
+        }
+      }
+    }
+  }, [router]);
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
     localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
     router.push('/');
+  };
+
+  const getInitials = (nome: string) => {
+    return nome
+      .split(' ')
+      .map((word) => word[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow p-6">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800">FatecHub - Estudante</h1>
-          <button
-            onClick={handleLogout}
-            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-          >
-            Logout
-          </button>
+      <nav className="bg-white shadow">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-6">
+          <div className="flex justify-between items-center">
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-800">FatecHub</h1>
+            
+            <div className="flex items-center gap-3 sm:gap-4 md:gap-6">
+              {user && (
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="flex flex-col items-end">
+                    <p className="text-xs sm:text-sm md:text-base font-semibold text-gray-800 truncate">
+                      {user.nome}
+                    </p>
+                    <p className="text-xs text-gray-500">Estudante</p>
+                  </div>
+                  
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold text-xs sm:text-sm flex-shrink-0">
+                    {user.foto ? (
+                      <img
+                        src={user.foto}
+                        alt={user.nome}
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    ) : (
+                      getInitials(user.nome)
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <button
+                onClick={handleLogout}
+                className="px-3 sm:px-4 py-1.5 sm:py-2 bg-red-600 text-white text-xs sm:text-sm rounded hover:bg-red-700 transition whitespace-nowrap"
+              >
+                Logout
+              </button>
+            </div>
+          </div>
         </div>
       </nav>
 

@@ -10,13 +10,21 @@ export default function AdminDashboard() {
   const router = useRouter();
 
   useEffect(() => {
-    // Aqui você buscaria o usuário do servidor
-    // Por enquanto, vamos verificar se há um token
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('authToken');
+      const userData = localStorage.getItem('userData');
+      
       if (!token) {
         router.push('/');
       } else {
+        if (userData) {
+          try {
+            const parsedUser = JSON.parse(userData);
+            setUser(parsedUser);
+          } catch (error) {
+            console.error('Erro ao parsear dados do usuário:', error);
+          }
+        }
         setLoading(false);
       }
     }
@@ -25,7 +33,17 @@ export default function AdminDashboard() {
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
     localStorage.removeItem('authToken');
+    localStorage.removeItem('userData');
     router.push('/');
+  };
+
+  const getInitials = (nome: string) => {
+    return nome
+      .split(' ')
+      .map((word) => word[0])
+      .join('')
+      .toUpperCase()
+      .slice(0, 2);
   };
 
   if (loading) {
@@ -33,9 +51,39 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="flex h-screen">
-      {/* Sidebar */}
-      <div className="w-64 bg-gray-900 text-white p-6">
+    <div className="flex h-screen flex-col">
+      {/* Header */}
+      <div className="bg-white shadow">
+        <div className="px-6 py-4 flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-gray-800">Dashboard Admin</h1>
+          
+          {user && (
+            <div className="flex items-center gap-4">
+              <div className="flex flex-col items-end">
+                <p className="text-sm font-semibold text-gray-800">{user.nome}</p>
+                <p className="text-xs text-gray-500">Administrador</p>
+              </div>
+              
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-bold flex-shrink-0">
+                {user.foto ? (
+                  <img
+                    src={user.foto}
+                    alt={user.nome}
+                    className="w-full h-full rounded-full object-cover"
+                  />
+                ) : (
+                  getInitials(user.nome)
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Main Content Area */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar */}
+        <div className="w-64 bg-gray-900 text-white p-6 overflow-y-auto">
         <h2 className="text-2xl font-bold mb-8">FatecHub Admin</h2>
         <nav className="space-y-4">
           <a href="#" className="block px-4 py-2 rounded bg-blue-600">Dashboard</a>
@@ -87,6 +135,7 @@ export default function AdminDashboard() {
             <p className="text-gray-500">Nenhum aluno inativo</p>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
