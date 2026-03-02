@@ -71,7 +71,7 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
                     value={formData.nomeEmpresa}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white text-gray-900"
                 />
             </div>
 
@@ -85,7 +85,7 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
                     value={formData.enderecoEmpresa}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white text-gray-900"
                 />
             </div>
 
@@ -100,7 +100,7 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
                         value={formData.emailContato}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white text-gray-900"
                     />
                 </div>
 
@@ -114,7 +114,7 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
                         value={formData.telephoneContato}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white text-gray-900"
                     />
                 </div>
             </div>
@@ -129,7 +129,7 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
                     value={formData.nomeResponsavel}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white text-gray-900"
                 />
             </div>
 
@@ -143,7 +143,7 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white text-gray-900 placeholder:text-gray-500"
                     placeholder="seu@email.com"
                 />
             </div>
@@ -158,7 +158,7 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white text-gray-900 placeholder:text-gray-500"
                     placeholder="Mínimo 8 caracteres"
                 />
             </div>

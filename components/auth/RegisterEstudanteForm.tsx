@@ -73,7 +73,7 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                         value={formData.nome}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white text-gray-900"
                     />
                 </div>
 
@@ -87,7 +87,7 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                         value={formData.ra}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white text-gray-900"
                     />
                 </div>
             </div>
@@ -103,7 +103,7 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                     onChange={handleChange}
                     required
                     placeholder="seu@fatec.sp.gov.br"
-                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white text-gray-900 placeholder:text-gray-500"
                 />
             </div>
 
@@ -116,7 +116,7 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                     name="emailSecundario"
                     value={formData.emailSecundario}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white text-gray-900"
                 />
             </div>
 
@@ -131,7 +131,7 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                         value={formData.telefoneMestre}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white text-gray-900"
                     />
                 </div>
 
@@ -145,7 +145,7 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                         value={formData.mestre}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white text-gray-900"
                     />
                 </div>
             </div>
@@ -159,7 +159,7 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                     value={formData.curso}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white text-gray-900"
                 >
                     <option value="">Selecione um curso</option>
                     <option value="Análise e Desenvolvimento de Sistemas">Análise e Desenvolvimento de Sistemas</option>
@@ -179,7 +179,7 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white text-gray-900 placeholder:text-gray-500"
                     placeholder="Mínimo 8 caracteres"
                 />
             </div>

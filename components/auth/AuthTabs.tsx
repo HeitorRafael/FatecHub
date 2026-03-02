@@ -26,7 +26,7 @@ export default function AuthTabs() {
     return (
         <div className="w-full max-w-md">
             {/* Tabs */}
-            <div className="flex gap-2 mb-6">
+            <div className="flex justify-center gap-2 mb-6">
                 <button
                     onClick={() => setActiveTab('login')}
                     className={`px-4 py-2 rounded-lg font-bold transition-all ${activeTab === 'login'
