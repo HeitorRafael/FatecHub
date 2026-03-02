@@ -3,11 +3,13 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AuthUser } from '@/types';
+import { useAdminStats } from '@/hooks/useAdminStats';
 
 export default function AdminDashboard() {
     const [user, setUser] = useState<AuthUser | null>(null);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
+    const { stats, loading: statsLoading } = useAdminStats();
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -154,7 +156,7 @@ export default function AdminDashboard() {
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
                                         <p className="text-gray-500 text-sm font-semibold uppercase tracking-wide">Total de Alunos</p>
-                                        <p className="text-4xl font-black text-gray-900 mt-2">0</p>
+                                        <p className="text-4xl font-black text-gray-900 mt-2">{stats.totalEstudantes}</p>
                                     </div>
                                     <div className="text-4xl">👥</div>
                                 </div>
@@ -165,7 +167,7 @@ export default function AdminDashboard() {
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
                                         <p className="text-gray-500 text-sm font-semibold uppercase tracking-wide">Total de Empresas</p>
-                                        <p className="text-4xl font-black text-gray-900 mt-2">0</p>
+                                        <p className="text-4xl font-black text-gray-900 mt-2">{stats.totalEmpresas}</p>
                                     </div>
                                     <div className="text-4xl">🏢</div>
                                 </div>
@@ -176,7 +178,7 @@ export default function AdminDashboard() {
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
                                         <p className="text-gray-500 text-sm font-semibold uppercase tracking-wide">Serviços Ativos</p>
-                                        <p className="text-4xl font-black text-gray-900 mt-2">0</p>
+                                        <p className="text-4xl font-black text-gray-900 mt-2">{stats.servicosAtivos}</p>
                                     </div>
                                     <div className="text-4xl">💼</div>
                                 </div>
@@ -187,7 +189,7 @@ export default function AdminDashboard() {
                                 <div className="flex justify-between items-start mb-4">
                                     <div>
                                         <p className="text-gray-500 text-sm font-semibold uppercase tracking-wide">Contratos Finalizados</p>
-                                        <p className="text-4xl font-black text-gray-900 mt-2">0</p>
+                                        <p className="text-4xl font-black text-gray-900 mt-2">{stats.contratosConcluidos}</p>
                                     </div>
                                     <div className="text-4xl">✅</div>
                                 </div>

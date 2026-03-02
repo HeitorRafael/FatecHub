@@ -3,10 +3,12 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AuthUser } from '@/types';
+import { useEmpresaStats } from '@/hooks/useEmpresaStats';
 
 export default function EmpresaDashboard() {
     const [user, setUser] = useState<AuthUser | null>(null);
     const router = useRouter();
+    const { stats, loading: statsLoading } = useEmpresaStats();
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -123,19 +125,19 @@ export default function EmpresaDashboard() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                     <div className="bg-white rounded-xl shadow-md p-4 border-l-4 border-red-600">
                         <p className="text-gray-600 text-xs sm:text-sm font-semibold mb-2">Vagas Abertas</p>
-                        <p className="text-3xl sm:text-4xl font-black text-gray-900">0</p>
+                        <p className="text-3xl sm:text-4xl font-black text-gray-900">{stats.vagasAbertas}</p>
                     </div>
                     <div className="bg-white rounded-xl shadow-md p-4 border-l-4 border-gray-400">
                         <p className="text-gray-600 text-xs sm:text-sm font-semibold mb-2">Candidaturas</p>
-                        <p className="text-3xl sm:text-4xl font-black text-gray-900">0</p>
+                        <p className="text-3xl sm:text-4xl font-black text-gray-900">{stats.candidaturas}</p>
                     </div>
                     <div className="bg-white rounded-xl shadow-md p-4 border-l-4 border-red-600">
                         <p className="text-gray-600 text-xs sm:text-sm font-semibold mb-2">Em Andamento</p>
-                        <p className="text-3xl sm:text-4xl font-black text-gray-900">0</p>
+                        <p className="text-3xl sm:text-4xl font-black text-gray-900">{stats.emAndamento}</p>
                     </div>
                     <div className="bg-white rounded-xl shadow-md p-4 border-l-4 border-gray-400">
                         <p className="text-gray-600 text-xs sm:text-sm font-semibold mb-2">Concluídos</p>
-                        <p className="text-3xl sm:text-4xl font-black text-gray-900">0</p>
+                        <p className="text-3xl sm:text-4xl font-black text-gray-900">{stats.concluidos}</p>
                     </div>
                 </div>
 

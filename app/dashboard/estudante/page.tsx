@@ -3,10 +3,12 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { AuthUser } from '@/types';
+import { useEstudanteStats } from '@/hooks/useEstudanteStats';
 
 export default function EstudanteDashboard() {
     const [user, setUser] = useState<AuthUser | null>(null);
     const router = useRouter();
+    const { stats, loading: statsLoading } = useEstudanteStats();
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -93,6 +95,26 @@ export default function EstudanteDashboard() {
                 <div className="mb-8">
                     <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-2">Bem-vindo ao Dashboard</h2>
                     <div className="h-1 w-20 bg-red-600 rounded-full"></div>
+                </div>
+
+                {/* Stats Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    <div className="bg-white rounded-xl shadow-md p-4 border-l-4 border-red-600">
+                        <p className="text-gray-600 text-xs sm:text-sm font-semibold mb-2">Oportunidades</p>
+                        <p className="text-3xl sm:text-4xl font-black text-gray-900">{stats.oportunidadesDisponíveis}</p>
+                    </div>
+                    <div className="bg-white rounded-xl shadow-md p-4 border-l-4 border-gray-400">
+                        <p className="text-gray-600 text-xs sm:text-sm font-semibold mb-2">Minhas Aplicações</p>
+                        <p className="text-3xl sm:text-4xl font-black text-gray-900">{stats.minhasAplicacoes}</p>
+                    </div>
+                    <div className="bg-white rounded-xl shadow-md p-4 border-l-4 border-red-600">
+                        <p className="text-gray-600 text-xs sm:text-sm font-semibold mb-2">Contratos Ativos</p>
+                        <p className="text-3xl sm:text-4xl font-black text-gray-900">{stats.contratosAtivos}</p>
+                    </div>
+                    <div className="bg-white rounded-xl shadow-md p-4 border-l-4 border-gray-400">
+                        <p className="text-gray-600 text-xs sm:text-sm font-semibold mb-2">Concluídos</p>
+                        <p className="text-3xl sm:text-4xl font-black text-gray-900">{stats.concluidos}</p>
+                    </div>
                 </div>
 
                 {/* Oportunidades */}
