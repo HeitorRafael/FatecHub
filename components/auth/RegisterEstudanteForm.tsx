@@ -44,6 +44,7 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
             }
 
             const data = await res.json();
+            localStorage.setItem('authToken', data.token);
             onSuccess(data.user.role);
         } catch (err) {
             setError(err instanceof Error ? err.message : 'Erro ao registrar');
