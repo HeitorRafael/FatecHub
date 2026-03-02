@@ -9,9 +9,6 @@ async function main() {
   console.log('🌱 Criando dados iniciais...\n');
 
   try {
-    // Limpar dados anteriores (opcional)
-    // await prisma.user.deleteMany({});
-
     const hashPassword = await bcryptjs.hash('admin123', 10);
 
     // Criar Admin
@@ -96,7 +93,7 @@ async function main() {
     console.log('   Senha: empresa123\n');
 
   } catch (error) {
-    console.error('❌ Erro durante seed:', error);
+    console.error('❌ Erro durante seed:', error.message);
     process.exit(1);
   } finally {
     await prisma.$disconnect();
