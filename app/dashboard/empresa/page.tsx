@@ -293,12 +293,12 @@ export default function EmpresaDashboard() {
                                     </div>
 
                                     <div className="flex gap-2">
-                                        <button 
+                                        <button
                                             onClick={() => openEditModal(servico)}
-                                            className="flex-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition font-semibold">
+                                            className="flex-1 px-3 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition font-semibold">
                                             Editar
                                         </button>
-                                        <button 
+                                        <button
                                             onClick={() => openDeleteModal(servico)}
                                             className="flex-1 px-3 py-2 bg-red-200 text-red-700 text-sm rounded-lg hover:bg-red-300 transition font-semibold">
                                             Deletar

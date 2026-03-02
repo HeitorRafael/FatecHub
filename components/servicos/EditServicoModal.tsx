@@ -100,7 +100,7 @@ export default function EditServicoModal({
         <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
             <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
                 {/* Header */}
-                <div className="bg-blue-600 border-b-4 border-blue-700 px-6 py-4 sticky top-0 z-10">
+                <div className="bg-red-600 border-b-4 border-red-700 px-6 py-4 sticky top-0 z-10">
                     <div className="flex justify-between items-center">
                         <h2 className="text-2xl font-black text-white">Editar Serviço</h2>
                         <button
@@ -130,7 +130,7 @@ export default function EditServicoModal({
                             name="titulo"
                             value={formData.titulo || ''}
                             onChange={handleChange}
-                            className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white text-gray-900"
+                            className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 bg-white text-gray-900"
                         />
                     </div>
 
@@ -144,7 +144,7 @@ export default function EditServicoModal({
                                 name="tipo"
                                 value={formData.tipo || ''}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white text-gray-900"
+                                className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 bg-white text-gray-900"
                             >
                                 <option value="">Selecione...</option>
                                 {tipos.map(tipo => (
@@ -163,7 +163,7 @@ export default function EditServicoModal({
                                 name="duracao"
                                 value={formData.duracao || ''}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white text-gray-900"
+                                className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 bg-white text-gray-900"
                             >
                                 <option value="">Selecione...</option>
                                 <option value={1}>1 semana</option>
@@ -184,7 +184,7 @@ export default function EditServicoModal({
                                 name="faixaPreco"
                                 value={formData.faixaPreco || ''}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white text-gray-900"
+                                className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 bg-white text-gray-900"
                             >
                                 <option value="">Selecione...</option>
                                 {faixas.map(faixa => (
@@ -203,7 +203,7 @@ export default function EditServicoModal({
                                 name="status"
                                 value={formData.status || ''}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white text-gray-900"
+                                className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 bg-white text-gray-900"
                             >
                                 <option value="">Selecione...</option>
                                 {statuses.map(status => (
@@ -226,7 +226,7 @@ export default function EditServicoModal({
                                 name="dataInicio"
                                 value={formData.dataInicio || ''}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white text-gray-900"
+                                className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 bg-white text-gray-900"
                             />
                         </div>
 
@@ -239,7 +239,7 @@ export default function EditServicoModal({
                                 name="dataFim"
                                 value={formData.dataFim || ''}
                                 onChange={handleChange}
-                                className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white text-gray-900"
+                                className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 bg-white text-gray-900"
                             />
                         </div>
                     </div>
@@ -254,7 +254,7 @@ export default function EditServicoModal({
                             value={formData.descricao || ''}
                             onChange={handleChange}
                             rows={4}
-                            className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white text-gray-900"
+                            className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 bg-white text-gray-900"
                         />
                     </div>
 
@@ -268,7 +268,7 @@ export default function EditServicoModal({
                             name="imagemUrl"
                             value={formData.imagemUrl || ''}
                             onChange={handleChange}
-                            className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 bg-white text-gray-900"
+                            className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-600 bg-white text-gray-900"
                         />
                     </div>
 
@@ -284,7 +284,7 @@ export default function EditServicoModal({
                         <button
                             type="submit"
                             disabled={isLoading}
-                            className="flex-1 px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:bg-gray-400 transition font-semibold"
+                            className="flex-1 px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-gray-400 transition font-semibold"
                         >
                             {isLoading ? 'Salvando...' : 'Salvar Alterações'}
                         </button>
