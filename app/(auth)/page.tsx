@@ -7,24 +7,24 @@ export const metadata = {
 
 export default function LoginPage() {
     return (
-        <div 
+        <div
             className="min-h-screen flex items-center justify-center p-4 bg-cover bg-center bg-fixed"
             style={{
                 backgroundImage: 'url(/redKraken.jpg)',
             }}
         >
-            <div className="w-full max-w-md bg-white/25 rounded-2xl shadow-2xl p-8">
+            <div className="w-full max-w-md bg-white/45 rounded-2xl shadow-2xl p-8">
                 <div className="text-center mb-8">
-                    <h1 className="text-4xl font-bold text-gray-800 mb-2">FatecHub</h1>
-                    <p className="text-gray-600">
+                    <h1 className="text-5xl font-bold text-gray-900 mb-2">FatecHub</h1>
+                    <p className="text-gray-800 font-medium">
                         Conectando alunos FATEC com oportunidades
                     </p>
                 </div>
 
                 <AuthTabs />
 
-                <div className="mt-8 pt-8 border-t border-gray-200">
-                    <p className="text-center text-xs text-gray-500">
+                <div className="mt-8 pt-8 border-t-2 border-gray-400">
+                    <p className="text-center text-xs text-gray-800 font-medium">
                         © 2026 FatecHub. Todos os direitos reservados.
                     </p>
                 </div>

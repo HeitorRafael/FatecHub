@@ -57,7 +57,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
             )}
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-bold text-gray-900 mb-2">
                     Email
                 </label>
                 <input
@@ -66,13 +66,13 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/90 text-gray-900 placeholder:text-gray-600"
                     placeholder="seu@email.com"
                 />
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-bold text-gray-900 mb-2">
                     Senha
                 </label>
                 <input
@@ -81,7 +81,7 @@ export default function LoginForm({ onSuccess }: LoginFormProps) {
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white/90 text-gray-900 placeholder:text-gray-600"
                     placeholder="••••••••"
                 />
             </div>

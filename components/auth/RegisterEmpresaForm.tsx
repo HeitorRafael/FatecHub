@@ -62,7 +62,7 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
             )}
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-bold text-gray-900 mb-1">
                     Nome da Empresa *
                 </label>
                 <input
@@ -71,12 +71,12 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
                     value={formData.nomeEmpresa}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                 />
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-bold text-gray-900 mb-1">
                     Endereço *
                 </label>
                 <input
@@ -85,13 +85,13 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
                     value={formData.enderecoEmpresa}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                 />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-bold text-gray-900 mb-1">
                         Email Contato *
                     </label>
                     <input
@@ -100,12 +100,12 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
                         value={formData.emailContato}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-bold text-gray-900 mb-1">
                         Telefone *
                     </label>
                     <input
@@ -114,13 +114,13 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
                         value={formData.telephoneContato}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                     />
                 </div>
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-bold text-gray-900 mb-1">
                     Nome do Responsável *
                 </label>
                 <input
@@ -129,12 +129,12 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
                     value={formData.nomeResponsavel}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                 />
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-bold text-gray-900 mb-1">
                     Email para Login *
                 </label>
                 <input
@@ -143,13 +143,13 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                     placeholder="seu@email.com"
                 />
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-bold text-gray-900 mb-1">
                     Senha *
                 </label>
                 <input
@@ -158,7 +158,7 @@ export default function RegisterEmpresaForm({ onSuccess }: RegisterEmpresaFormPr
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                     placeholder="Mínimo 8 caracteres"
                 />
             </div>

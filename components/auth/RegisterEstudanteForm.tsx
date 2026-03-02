@@ -64,7 +64,7 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
 
             <div className="grid grid-cols-2 gap-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-bold text-gray-900 mb-1">
                         Nome Completo *
                     </label>
                     <input
@@ -73,12 +73,12 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                         value={formData.nome}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-bold text-gray-900 mb-1">
                         RA *
                     </label>
                     <input
@@ -87,13 +87,13 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                         value={formData.ra}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                     />
                 </div>
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-bold text-gray-900 mb-1">
                     Email Institucional *
                 </label>
                 <input
@@ -103,12 +103,12 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                     onChange={handleChange}
                     required
                     placeholder="seu@fatec.sp.gov.br"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                 />
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-bold text-gray-900 mb-1">
                     Email Secundário
                 </label>
                 <input
@@ -116,13 +116,13 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                     name="emailSecundario"
                     value={formData.emailSecundario}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                 />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-bold text-gray-900 mb-1">
                         Telefone *
                     </label>
                     <input
@@ -131,12 +131,12 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                         value={formData.telefoneMestre}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-bold text-gray-900 mb-1">
                         Mestre *
                     </label>
                     <input
@@ -145,13 +145,13 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                         value={formData.mestre}
                         onChange={handleChange}
                         required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="w-full px-3 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                     />
                 </div>
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-bold text-gray-900 mb-1">
                     Curso *
                 </label>
                 <select
@@ -159,7 +159,7 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                     value={formData.curso}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                 >
                     <option value="">Selecione um curso</option>
                     <option value="Análise e Desenvolvimento de Sistemas">Análise e Desenvolvimento de Sistemas</option>
@@ -170,7 +170,7 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
             </div>
 
             <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-bold text-gray-900 mb-1">
                     Senha *
                 </label>
                 <input
@@ -179,7 +179,7 @@ export default function RegisterEstudanteForm({ onSuccess }: RegisterEstudanteFo
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    className="w-full px-4 py-2 border-2 border-gray-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                     placeholder="Mínimo 8 caracteres"
                 />
             </div>
