@@ -2,13 +2,18 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { AuthUser } from '@/types';
+import { AuthUser, CreateServicoRequest, Servico } from '@/types';
 import { useEmpresaStats } from '@/hooks/useEmpresaStats';
+import { useServicos } from '@/hooks/useServicos';
+import CreateServicoModal from '@/components/servicos/CreateServicoModal';
 
 export default function EmpresaDashboard() {
     const [user, setUser] = useState<AuthUser | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isCreating, setIsCreating] = useState(false);
     const router = useRouter();
-    const { stats, loading: statsLoading } = useEmpresaStats();
+    const { stats } = useEmpresaStats();
+    const { servicos, loading: servicosLoading, criarServico: criarServicoHook } = useServicos();
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -35,6 +40,15 @@ export default function EmpresaDashboard() {
         router.push('/');
     };
 
+    const handleCreateServico = async (data: CreateServicoRequest) => {
+        setIsCreating(true);
+        try {
+            await criarServicoHook(data);
+        } finally {
+            setIsCreating(false);
+        }
+    };
+
     const getInitials = (nome: string) => {
         return nome
             .split(' ')
@@ -44,9 +58,22 @@ export default function EmpresaDashboard() {
             .slice(0, 2);
     };
 
+    const formatarData = (data: Date | string) => {
+        const date = typeof data === 'string' ? new Date(data) : data;
+        return date.toLocaleDateString('pt-BR');
+    };
+
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Header Sofisticado */}
+            {/* Modal */}
+            <CreateServicoModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSubmit={handleCreateServico}
+                isLoading={isCreating}
+            />
+
+            {/* Header */}
             <nav className="bg-red-600 border-b-4 border-red-700 shadow-lg">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-5">
                     <div className="flex justify-between items-center">
@@ -105,8 +132,11 @@ export default function EmpresaDashboard() {
                             <div className="w-4 h-4 bg-red-600 rounded-full"></div>
                             <h3 className="text-xl sm:text-2xl font-black text-gray-900">Serviços Ativos</h3>
                         </div>
-                        <p className="text-gray-500 font-medium mb-4">Nenhum serviço cadastrado</p>
-                        <button className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-semibold shadow-md">
+                        <p className="text-gray-500 font-medium mb-4">I{stats.vagasAbertas} serviço(s) ativo(s)</p>
+                        <button
+                            onClick={() => setIsModalOpen(true)}
+                            className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-semibold shadow-md"
+                        >
                             + Novo Serviço
                         </button>
                     </div>
@@ -117,7 +147,7 @@ export default function EmpresaDashboard() {
                             <div className="w-4 h-4 bg-gray-900 rounded-full"></div>
                             <h3 className="text-xl sm:text-2xl font-black text-gray-900">Contratos Finalizados</h3>
                         </div>
-                        <p className="text-gray-500 font-medium">Nenhum contrato finalizado</p>
+                        <p className="text-gray-500 font-medium">{stats.concluidos} contrato(s) finalizado(s)</p>
                     </div>
                 </div>
 
@@ -142,12 +172,79 @@ export default function EmpresaDashboard() {
                 </div>
 
                 {/* CTA Banner */}
-                <div className="bg-white rounded-xl p-6 sm:p-12 text-center shadow-lg border-2 border-red-600">
-                    <h3 className="text-2xl sm:text-3xl font-black text-gray-900 mb-3">Comece a Postar Oportunidades</h3>
-                    <p className="text-gray-900 font-semibold text-lg mb-6">Conecte sua empresa com os melhores talentos da FATEC</p>
-                    <button className="px-6 sm:px-8 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-bold shadow-lg">
-                        Criar Nova Oportunidade
+                <div className="bg-white rounded-xl p-6 sm:p-12 text-center shadow-lg border-2 border-red-600 mb-8">
+                    <h3 className="text-2xl sm:text-3xl font-black text-gray-900 mb-3">Conecte-se com os Melhores Talentos</h3>
+                    <p className="text-gray-900 font-semibold text-lg mb-6">Poste seus serviços e receba candidaturas de alunos qualificados da FATEC</p>
+                    <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="px-6 sm:px-8 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-bold shadow-lg"
+                    >
+                        Postar Novo Serviço
                     </button>
+                </div>
+
+                {/* Serviços List */}
+                <div>
+                    <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center gap-3">
+                            <div className="w-4 h-4 bg-red-600 rounded-full"></div>
+                            <h3 className="text-2xl font-black text-gray-900">Meus Serviços</h3>
+                            <span className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-semibold">
+                                {servicos.length}
+                            </span>
+                        </div>
+                    </div>
+
+                    {servicosLoading ? (
+                        <div className="text-center py-8">
+                            <p className="text-gray-500 font-medium">Carregando serviços...</p>
+                        </div>
+                    ) : servicos.length === 0 ? (
+                        <div className="bg-white rounded-xl shadow-md p-8 text-center border-l-4 border-gray-400">
+                            <p className="text-gray-500 font-medium mb-4">Você ainda não criou nenhum serviço</p>
+                            <button
+                                onClick={() => setIsModalOpen(true)}
+                                className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-semibold inline-block"
+                            >
+                                Criar Primeiro Serviço
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {servicos.map((servico: Servico) => (
+                                <div
+                                    key={servico.id}
+                                    className="bg-white rounded-xl shadow-md p-6 border-l-4 border-red-600 hover:shadow-lg transition"
+                                >
+                                    {servico.imagemUrl && (
+                                        <img
+                                            src={servico.imagemUrl}
+                                            alt={servico.titulo}
+                                            className="w-full h-32 object-cover rounded-lg mb-4"
+                                        />
+                                    )}
+                                    <h4 className="text-lg font-black text-gray-900 mb-2">{servico.titulo}</h4>
+                                    <p className="text-sm text-gray-600 mb-3 line-clamp-2">{servico.descricao}</p>
+
+                                    <div className="space-y-1 mb-4 text-sm text-gray-600">
+                                        <p>📦 <span className="font-semibold">{servico.tipo}</span></p>
+                                        <p>⏱️ <span className="font-semibold">{servico.duracao} semanas</span></p>
+                                        <p>💰 <span className="font-semibold">{servico.faixaPreco}</span></p>
+                                        <p>📅 {formatarData(servico.dataInicio)} - {formatarData(servico.dataFim)}</p>
+                                    </div>
+
+                                    <div className="flex gap-2">
+                                        <button className="flex-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition font-semibold">
+                                            Editar
+                                        </button>
+                                        <button className="flex-1 px-3 py-2 bg-red-200 text-red-700 text-sm rounded-lg hover:bg-red-300 transition font-semibold">
+                                            Deletar
+                                        </button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
