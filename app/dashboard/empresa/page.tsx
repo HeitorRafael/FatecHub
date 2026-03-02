@@ -2,18 +2,25 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { AuthUser, CreateServicoRequest, Servico } from '@/types';
+import { AuthUser, CreateServicoRequest, Servico, UpdateServicoRequest } from '@/types';
 import { useEmpresaStats } from '@/hooks/useEmpresaStats';
 import { useServicos } from '@/hooks/useServicos';
 import CreateServicoModal from '@/components/servicos/CreateServicoModal';
+import EditServicoModal from '@/components/servicos/EditServicoModal';
+import DeleteServicoModal from '@/components/servicos/DeleteServicoModal';
 
 export default function EmpresaDashboard() {
     const [user, setUser] = useState<AuthUser | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isCreating, setIsCreating] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [servicoSelecionado, setServicoSelecionado] = useState<Servico | null>(null);
+    const [isEditing, setIsEditing] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
     const router = useRouter();
     const { stats } = useEmpresaStats();
-    const { servicos, loading: servicosLoading, criarServico: criarServicoHook } = useServicos();
+    const { servicos, loading: servicosLoading, criarServico: criarServicoHook, editarServico: editarServicoHook, deletarServico: deletarServicoHook } = useServicos();
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -49,6 +56,38 @@ export default function EmpresaDashboard() {
         }
     };
 
+    const handleEditServico = async (id: string, data: UpdateServicoRequest) => {
+        setIsEditing(true);
+        try {
+            await editarServicoHook(id, data);
+            setIsEditModalOpen(false);
+            setServicoSelecionado(null);
+        } finally {
+            setIsEditing(false);
+        }
+    };
+
+    const handleDeleteServico = async (id: string) => {
+        setIsDeleting(true);
+        try {
+            await deletarServicoHook(id);
+            setIsDeleteModalOpen(false);
+            setServicoSelecionado(null);
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
+    const openEditModal = (servico: Servico) => {
+        setServicoSelecionado(servico);
+        setIsEditModalOpen(true);
+    };
+
+    const openDeleteModal = (servico: Servico) => {
+        setServicoSelecionado(servico);
+        setIsDeleteModalOpen(true);
+    };
+
     const getInitials = (nome: string) => {
         return nome
             .split(' ')
@@ -65,12 +104,32 @@ export default function EmpresaDashboard() {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Modal */}
+            {/* Modals */}
             <CreateServicoModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 onSubmit={handleCreateServico}
                 isLoading={isCreating}
+            />
+            <EditServicoModal
+                isOpen={isEditModalOpen}
+                servico={servicoSelecionado}
+                onClose={() => {
+                    setIsEditModalOpen(false);
+                    setServicoSelecionado(null);
+                }}
+                onSubmit={handleEditServico}
+                isLoading={isEditing}
+            />
+            <DeleteServicoModal
+                isOpen={isDeleteModalOpen}
+                servico={servicoSelecionado}
+                onClose={() => {
+                    setIsDeleteModalOpen(false);
+                    setServicoSelecionado(null);
+                }}
+                onConfirm={handleDeleteServico}
+                isLoading={isDeleting}
             />
 
             {/* Header */}
@@ -234,10 +293,14 @@ export default function EmpresaDashboard() {
                                     </div>
 
                                     <div className="flex gap-2">
-                                        <button className="flex-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition font-semibold">
+                                        <button 
+                                            onClick={() => openEditModal(servico)}
+                                            className="flex-1 px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 transition font-semibold">
                                             Editar
                                         </button>
-                                        <button className="flex-1 px-3 py-2 bg-red-200 text-red-700 text-sm rounded-lg hover:bg-red-300 transition font-semibold">
+                                        <button 
+                                            onClick={() => openDeleteModal(servico)}
+                                            className="flex-1 px-3 py-2 bg-red-200 text-red-700 text-sm rounded-lg hover:bg-red-300 transition font-semibold">
                                             Deletar
                                         </button>
                                     </div>
