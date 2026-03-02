@@ -1,15 +1,15 @@
 export const metadata = {
-  title: 'FatecHub - Dashboard',
+    title: 'FatecHub - Dashboard',
 };
 
 export default function DashboardLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {children}
-    </div>
-  );
+    return (
+        <div className="min-h-screen bg-gray-50">
+            {children}
+        </div>
+    );
 }
