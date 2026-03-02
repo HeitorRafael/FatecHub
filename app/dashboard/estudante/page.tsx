@@ -313,9 +313,6 @@ export default function EstudanteDashboard() {
                                         {/* Info da Empresa */}
                                         <div className="mb-3 pb-3 border-b border-gray-200">
                                             <p className="text-sm font-semibold text-gray-700">{servico.empresa.nomeEmpresa}</p>
-                                            {servico.empresa.localizacao && (
-                                                <p className="text-xs text-gray-500">📍 {servico.empresa.localizacao}</p>
-                                            )}
                                         </div>
 
                                         {/* Título e Descrição */}

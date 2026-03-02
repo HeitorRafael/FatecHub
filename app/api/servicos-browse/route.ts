@@ -49,8 +49,6 @@ export async function GET(request: NextRequest) {
                     select: {
                         id: true,
                         nomeEmpresa: true,
-                        setor: true,
-                        localizacao: true,
                     },
                 },
                 _count: {
