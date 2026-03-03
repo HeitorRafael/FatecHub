@@ -76,18 +76,13 @@ export default function EmpresaCandidaturasPage() {
             }
 
             const result = await response.json();
-            const servico = data?.servicos.find(s =>
-                s.inscricoes.some(i => i.id === inscricaoId)
-            );
-
-            if (servico) {
-                const inscricao = servico.inscricoes.find(i => i.id === inscricaoId);
-                if (inscricao) {
-                    setCandidatoAceito({
-                        estudante: inscricao.estudante,
-                        servicoTitulo,
-                    });
-                }
+            
+            // Usar dados do contrato retornado pela API
+            if (result.contrato && result.contrato.estudante) {
+                setCandidatoAceito({
+                    estudante: result.contrato.estudante,
+                    servicoTitulo,
+                });
             }
 
             await refetch();
@@ -200,6 +195,12 @@ export default function EmpresaCandidaturasPage() {
                     <>
                         {/* Title Section */}
                         <div className="mb-8">
+                            <button
+                                onClick={() => router.push('/dashboard/empresa')}
+                                className="mb-6 px-4 py-2 bg-gray-200 text-gray-900 rounded-lg hover:bg-gray-300 transition font-semibold text-sm flex items-center gap-2"
+                            >
+                                ← Voltar
+                            </button>
                             <div className="flex justify-between items-center mb-4">
                                 <div>
                                     <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-2">
@@ -274,11 +275,11 @@ export default function EmpresaCandidaturasPage() {
                                                     </div>
                                                 </div>
                                                 <div className="ml-4 flex-shrink-0">
-                                                    <div className="rounded-full w-16 h-16 flex flex-col items-center justify-center shadow-md border-2 border-white" style={{backgroundColor: '#991B1B'}}>
-                                                        <span className="font-black text-2xl" style={{color: '#FFFFFF'}}>
+                                                    <div className="rounded-lg px-10 py-4 flex flex-col items-center justify-center shadow-md border-2 border-white" style={{backgroundColor: '#991B1B'}}>
+                                                        <span className="font-black text-3xl" style={{color: '#FFFFFF'}}>
                                                             {servico.inscricoes.length}
                                                         </span>
-                                                        <p className="text-xs font-bold" style={{color: '#FFFFFF'}}>candidatos</p>
+                                                        <p className="text-sm font-bold mt-1 text-center" style={{color: '#FFFFFF'}}>candidatos</p>
                                                     </div>
                                                 </div>
                                             </div>

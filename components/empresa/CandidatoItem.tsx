@@ -43,7 +43,12 @@ export default function CandidatoItem({
                 <button
                     onClick={() => onAceitar(id)}
                     disabled={isLoading}
-                    className="ml-4 px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition font-bold shadow-md border-2 border-green-700 flex-shrink-0 active:scale-95"
+                    className="ml-4 px-6 py-3 rounded-lg font-bold shadow-md flex-shrink-0 active:scale-95 transition disabled:cursor-not-allowed"
+                    style={{
+                        backgroundColor: isLoading ? '#9CA3AF' : '#16A34A',
+                        color: '#FFFFFF',
+                        border: '2px solid #15803D',
+                    }}
                 >
                     {isLoading ? '✓ Processando...' : '✓ Aceitar'}
                 </button>
