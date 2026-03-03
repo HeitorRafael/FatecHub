@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Portal from '@/components/Portal';
 
 interface CandidatarModalProps {
     isOpen: boolean;
@@ -50,8 +51,30 @@ export default function CandidatarModal({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-[9999] flex items-center justify-center p-4 overflow-hidden" style={{display: 'flex'}}>
-            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden" style={{maxHeight: '90vh', overflowY: 'auto'}}>
+        <Portal>
+            <div 
+                className="flex items-center justify-center p-4"
+                style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    zIndex: 99999,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
+            <div 
+                className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden"
+                style={{
+                    maxHeight: '85vh',
+                    overflowY: 'auto',
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                }}
+            >
                 {/* Header */}
                 <div className="bg-gradient-to-r from-red-600 to-red-700 border-b-4 border-red-700 px-6 py-4">
                     <div className="flex justify-between items-center">
@@ -84,7 +107,7 @@ export default function CandidatarModal({
                         </div>
                     </div>
 
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-800">
+                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-gray-800 font-medium">
                         ℹ️ Ao candidatar-se, a empresa receberá sua aplicação e poderá entrar em contato com você.
                     </div>
 
@@ -112,6 +135,7 @@ export default function CandidatarModal({
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
+        </Portal>
     );
 }
