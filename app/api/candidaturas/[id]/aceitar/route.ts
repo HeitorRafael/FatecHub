@@ -2,10 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/db/client';
 import { verifyToken } from '@/lib/auth/jwt';
 
+console.log('✅ ROUTE FILE LOADED - candidaturas/[id]/aceitar/route.ts');
+
 export async function POST(
     request: NextRequest,
     { params }: { params: { id: string } }
 ) {
+    console.log('🔥 POST REQUEST RECEIVED - Iniciando aceitar candidato');
+    console.log('Inscrição ID:', params.id);
     try {
         console.log('=== Iniciando aceitar candidato ===');
         console.log('Inscrição ID:', params.id);
