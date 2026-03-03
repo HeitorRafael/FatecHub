@@ -184,19 +184,34 @@ export default function EmpresaDashboard() {
                 </div>
 
                 {/* Main Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                     {/* Serviços Ativos */}
                     <div className="bg-white rounded-xl shadow-md p-6 sm:p-8 border-t-4 border-red-600 hover:shadow-lg transition">
                         <div className="flex items-center gap-3 mb-4">
                             <div className="w-4 h-4 bg-red-600 rounded-full"></div>
                             <h3 className="text-xl sm:text-2xl font-black text-gray-900">Serviços Ativos</h3>
                         </div>
-                        <p className="text-gray-500 font-medium mb-4">I{stats.vagasAbertas} serviço(s) ativo(s)</p>
+                        <p className="text-gray-500 font-medium mb-4">{stats.vagasAbertas} serviço(s) ativo(s)</p>
                         <button
                             onClick={() => setIsModalOpen(true)}
                             className="w-full px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-semibold shadow-md"
                         >
                             + Novo Serviço
+                        </button>
+                    </div>
+
+                    {/* Ver Candidaturas */}
+                    <div className="bg-white rounded-xl shadow-md p-6 sm:p-8 border-t-4 border-blue-600 hover:shadow-lg transition cursor-pointer" onClick={() => router.push('/dashboard/empresa/candidaturas')}>
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="w-4 h-4 bg-blue-600 rounded-full"></div>
+                            <h3 className="text-xl sm:text-2xl font-black text-gray-900">Candidaturas</h3>
+                        </div>
+                        <p className="text-gray-500 font-medium mb-4">{stats.candidaturas} candidato(s)</p>
+                        <button
+                            onClick={() => router.push('/dashboard/empresa/candidaturas')}
+                            className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold shadow-md"
+                        >
+                            👥 Ver Candidatos
                         </button>
                     </div>
 
