@@ -17,6 +17,7 @@ export async function GET(request: NextRequest) {
         // Construir filtros
         const where: any = {
             status: 'ATIVO',
+            contrato: null, // Apenas serviços sem contrato (ainda abertos)
         };
 
         if (tipo) {

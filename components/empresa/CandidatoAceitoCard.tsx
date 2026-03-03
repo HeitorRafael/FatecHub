@@ -34,6 +34,12 @@ export default function CandidatoAceitoCard({
 
     return (
         <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl shadow-lg border-4 border-green-500 p-8">
+            {/* Status: Serviço Fechado */}
+            <div className="bg-green-500 text-white rounded-lg p-6 mb-6 text-center border-4 border-green-600 shadow-lg">
+                <h1 className="text-4xl font-black mb-2">🎉 SERVIÇO FECHADO!</h1>
+                <p className="text-xl font-bold">Match Encontrado com Sucesso</p>
+            </div>
+            
             {/* Cabeçalho */}
             <div className="text-center mb-6">
                 <div className="inline-block bg-green-500 text-white px-4 py-2 rounded-full mb-4 font-bold">
