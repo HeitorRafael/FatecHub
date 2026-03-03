@@ -66,15 +66,20 @@ export async function POST(
             );
         }
 
-        // Verificar se já existe um contrato para este serviço
+        // Verificar se já existe um contrato para este serviço/estudante
         const contratoExistente = await prisma.contrato.findUnique({
-            where: { servicoId: inscricao.servico.id },
+            where: {
+                servicoId_estudanteId: {
+                    servicoId: inscricao.servico.id,
+                    estudanteId: inscricao.estudante.id,
+                },
+            },
         });
 
         if (contratoExistente) {
-            console.log('Contrato já existe para este serviço');
+            console.log('Contrato já existe para este serviço/estudante');
             return NextResponse.json(
-                { error: 'Este serviço já possui um contrato aceito' },
+                { error: 'Este candidato já foi aceito para este serviço' },
                 { status: 400 }
             );
         }
