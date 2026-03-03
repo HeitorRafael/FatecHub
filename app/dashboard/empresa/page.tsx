@@ -285,11 +285,18 @@ export default function EmpresaDashboard() {
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {servicos.map((servico: Servico) => (
+                            {servicos.map((servico: Servico) => {
+                                const isFechado = (servico as any).contrato ? true : false;
+                                return (
                                 <div
                                     key={servico.id}
-                                    className="bg-white rounded-xl shadow-md p-6 border-l-4 border-red-600 hover:shadow-lg transition"
+                                    className={`bg-white rounded-xl shadow-md p-6 border-l-4 ${isFechado ? 'border-green-600 opacity-75' : 'border-red-600'} hover:shadow-lg transition relative`}
                                 >
+                                    {isFechado && (
+                                        <div className="absolute top-3 right-3 bg-green-600 text-white px-3 py-1 rounded-full text-xs font-bold">
+                                            ✓ FECHADO
+                                        </div>
+                                    )}
                                     {servico.imagemUrl && (
                                         <img
                                             src={servico.imagemUrl}
@@ -310,17 +317,30 @@ export default function EmpresaDashboard() {
                                     <div className="flex gap-2">
                                         <button
                                             onClick={() => openEditModal(servico)}
-                                            className="flex-1 px-3 py-2 bg-red-600 text-white text-sm rounded-lg hover:bg-red-700 transition font-semibold">
+                                            disabled={isFechado}
+                                            className={`flex-1 px-3 py-2 text-sm rounded-lg transition font-semibold ${
+                                                isFechado
+                                                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                                    : 'bg-red-600 text-white hover:bg-red-700'
+                                            }`}
+                                        >
                                             Editar
                                         </button>
                                         <button
                                             onClick={() => openDeleteModal(servico)}
-                                            className="flex-1 px-3 py-2 bg-red-200 text-red-700 text-sm rounded-lg hover:bg-red-300 transition font-semibold">
+                                            disabled={isFechado}
+                                            className={`flex-1 px-3 py-2 text-sm rounded-lg transition font-semibold ${
+                                                isFechado
+                                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                                    : 'bg-red-200 text-red-700 hover:bg-red-300'
+                                            }`}
+                                        >
                                             Deletar
                                         </button>
                                     </div>
                                 </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     )}
                 </div>

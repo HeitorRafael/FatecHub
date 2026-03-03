@@ -6,9 +6,10 @@ import { UpdateServicoRequest } from '@/types';
 // GET - Obter serviço específico
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const token = request.headers.get('Authorization')?.replace('Bearer ', '');
         if (!token) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
@@ -20,7 +21,7 @@ export async function GET(
         }
 
         const servico = await prisma.servico.findUnique({
-            where: { id: params.id },
+            where: { id },
         });
 
         if (!servico) {
@@ -46,9 +47,10 @@ export async function GET(
 // PUT - Editar serviço
 export async function PUT(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const token = request.headers.get('Authorization')?.replace('Bearer ', '');
         if (!token) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
@@ -68,7 +70,7 @@ export async function PUT(
         }
 
         const servico = await prisma.servico.findUnique({
-            where: { id: params.id },
+            where: { id },
         });
 
         if (!servico) {
@@ -105,7 +107,7 @@ export async function PUT(
         }
 
         const servicoAtualizado = await prisma.servico.update({
-            where: { id: params.id },
+            where: { id },
             data: updateData,
         });
 
@@ -119,9 +121,10 @@ export async function PUT(
 // DELETE - Deletar serviço
 export async function DELETE(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
+        const { id } = await params;
         const token = request.headers.get('Authorization')?.replace('Bearer ', '');
         if (!token) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
@@ -141,7 +144,7 @@ export async function DELETE(
         }
 
         const servico = await prisma.servico.findUnique({
-            where: { id: params.id },
+            where: { id },
         });
 
         if (!servico) {
@@ -154,7 +157,7 @@ export async function DELETE(
 
         // Verificar se tem inscrições/contratos
         const inscricoes = await prisma.inscricao.count({
-            where: { servicoId: params.id },
+            where: { servicoId: id },
         });
 
         if (inscricoes > 0) {
@@ -165,7 +168,7 @@ export async function DELETE(
         }
 
         await prisma.servico.delete({
-            where: { id: params.id },
+            where: { id },
         });
 
         return NextResponse.json({ message: 'Serviço deletado com sucesso' });

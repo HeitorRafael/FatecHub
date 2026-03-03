@@ -26,6 +26,11 @@ export async function GET(request: NextRequest) {
 
         const servicos = await prisma.servico.findMany({
             where: { empresaId: empresa.id },
+            include: {
+                contrato: {
+                    select: { id: true }
+                }
+            },
             orderBy: { criadoEm: 'desc' },
         });
 
