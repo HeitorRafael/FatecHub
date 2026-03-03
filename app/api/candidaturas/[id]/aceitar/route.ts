@@ -7,6 +7,9 @@ export async function POST(
     { params }: { params: { id: string } }
 ) {
     try {
+        console.log('=== Iniciando aceitar candidato ===');
+        console.log('Inscrição ID:', params.id);
+        
         const token = request.headers.get('Authorization')?.replace('Bearer ', '');
         if (!token) {
             return NextResponse.json({ error: 'Não autenticado' }, { status: 401 });
@@ -17,14 +20,22 @@ export async function POST(
             return NextResponse.json({ error: 'Não é uma empresa' }, { status: 403 });
         }
 
-        // Buscar a inscrição
+        console.log('Usuário verificado:', decoded.userId);
+
+        // Buscar a inscrição com todos os dados necessários
         const inscricao = await prisma.inscricao.findUnique({
             where: { id: params.id },
             include: {
                 servico: true,
-                estudante: true,
+                estudante: {
+                    include: {
+                        user: true,
+                    },
+                },
             },
         });
+
+        console.log('Inscrição encontrada:', inscricao?.id);
 
         if (!inscricao) {
             return NextResponse.json(
@@ -38,7 +49,17 @@ export async function POST(
             where: { userId: decoded.userId },
         });
 
-        if (!empresa || inscricao.servico.empresaId !== empresa.id) {
+        console.log('Empresa encontrada:', empresa?.id);
+
+        if (!empresa) {
+            return NextResponse.json(
+                { error: 'Empresa não encontrada' },
+                { status: 403 }
+            );
+        }
+
+        if (inscricao.servico.empresaId !== empresa.id) {
+            console.log('Acesso negado: empresa não é dona do serviço');
             return NextResponse.json(
                 { error: 'Acesso negado' },
                 { status: 403 }
@@ -51,12 +72,14 @@ export async function POST(
         });
 
         if (contratoExistente) {
+            console.log('Contrato já existe para este serviço');
             return NextResponse.json(
                 { error: 'Este serviço já possui um contrato aceito' },
                 { status: 400 }
             );
         }
 
+        console.log('Criando contrato');
         // Criar contrato
         const contrato = await prisma.contrato.create({
             data: {
@@ -65,7 +88,7 @@ export async function POST(
                 estudanteId: inscricao.estudante.id,
                 status: 'AGUARDANDO_INICIO',
                 dataAceite: new Date(),
-                prazoMaximoAvaliacao: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 dias
+                prazoMaximoAvaliacao: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
             },
             include: {
                 estudante: {
@@ -77,12 +100,25 @@ export async function POST(
             },
         });
 
+        // Marcar inscrição como não anônima após contrato criado
+        await prisma.inscricao.update({
+            where: { id: params.id },
+            data: { anonimoParaEmpresa: false },
+        });
+
+        console.log('Contrato criado e inscrição marcada:', contrato.id);
+
         return NextResponse.json({
             message: 'Candidato aceito com sucesso',
             contrato,
         });
     } catch (error) {
-        console.error('Erro ao aceitar candidato:', error);
+        console.error('=== ERRO ao aceitar candidato ===');
+        console.error('Erro completo:', error);
+        if (error instanceof Error) {
+            console.error('Mensagem:', error.message);
+            console.error('Stack:', error.stack);
+        }
         return NextResponse.json(
             {
                 error: 'Erro ao aceitar candidato',

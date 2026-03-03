@@ -245,8 +245,10 @@ export default function EmpresaCandidaturasPage() {
 
                         {/* Serviços e Candidaturas */}
                         <div className="space-y-8">
-                            {data?.servicos && data.servicos.length > 0 ? (
-                                data.servicos.map((servico) => (
+                            {data?.servicos && data.servicos.filter(s => s.inscricoes.length > 0).length > 0 ? (
+                                data.servicos
+                                    .filter(s => s.inscricoes.length > 0)
+                                    .map((servico) => (
                                     <div key={servico.id} className="bg-white rounded-xl shadow-lg overflow-hidden border-t-8 border-red-600">
                                         {/* Serviço Header */}
                                         <div
@@ -321,10 +323,10 @@ export default function EmpresaCandidaturasPage() {
                             ) : (
                                 <div className="bg-white rounded-xl shadow-md p-8 text-center border-l-4 border-gray-400">
                                     <p className="text-gray-500 text-lg font-semibold">
-                                        Nenhum serviço cadastrado ainda
+                                        Nenhum candidato aguardando
                                     </p>
                                     <p className="text-gray-400 text-sm mt-2">
-                                        Crie serviços para receber candidaturas
+                                        Seus serviços não possuem candidatos pendentes
                                     </p>
                                 </div>
                             )}

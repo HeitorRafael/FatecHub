@@ -24,10 +24,17 @@ export async function GET(request: NextRequest) {
         }
 
         // Buscar todas as inscrições dos serviços desta empresa, agrupadas por serviço
+        // Filtrando apenas candidaturas anônimas (não aceitas ainda)
         const servicos = await prisma.servico.findMany({
-            where: { empresaId: empresa.id },
+            where: { 
+                empresaId: empresa.id,
+            },
             include: {
                 inscricoes: {
+                    // Apenas inscrições que ainda são anônimas (não foram aceitas)
+                    where: {
+                        anonimoParaEmpresa: true,
+                    },
                     include: {
                         estudante: {
                             select: {
