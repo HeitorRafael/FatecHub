@@ -105,11 +105,17 @@ export async function POST(request: NextRequest) {
         }
 
         // Criar inscrição
+        const horaAtual = new Date().toLocaleTimeString('pt-BR', { 
+            hour: '2-digit', 
+            minute: '2-digit',
+            hour12: false 
+        });
+        
         const inscricao = await prisma.inscricao.create({
             data: {
                 estudanteId: estudante.id,
                 servicoId: servicoId,
-                status: 'PENDENTE',
+                horaInscricao: horaAtual,
             },
             include: {
                 servico: {
@@ -131,7 +137,17 @@ export async function POST(request: NextRequest) {
 
         return NextResponse.json(inscricao, { status: 201 });
     } catch (error) {
-        console.error('Erro ao criar inscrição:', error);
-        return NextResponse.json({ error: 'Erro ao criar inscrição' }, { status: 500 });
+        console.error('❌ Erro COMPLETO ao criar inscrição:', error);
+        if (error instanceof Error) {
+            console.error('❌ Mensagem:', error.message);
+            console.error('❌ Stack:', error.stack);
+        }
+        return NextResponse.json(
+            { 
+                error: 'Erro ao criar inscrição',
+                details: error instanceof Error ? error.message : 'Erro desconhecido'
+            }, 
+            { status: 500 }
+        );
     }
 }

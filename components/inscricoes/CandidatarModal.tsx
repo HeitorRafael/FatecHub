@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface CandidatarModalProps {
     isOpen: boolean;
@@ -21,12 +21,27 @@ export default function CandidatarModal({
 }: CandidatarModalProps) {
     const [erro, setErro] = useState<string | null>(null);
 
+    useEffect(() => {
+        console.log('CandidatarModal isOpen:', isOpen, 'titulo:', servicoTitulo);
+    }, [isOpen, servicoTitulo]);
+
     const handleConfirm = async () => {
+        console.log('❌ BOTÃO CLICADO - handleConfirm início');
+        console.log('❌ onConfirm prop:', typeof onConfirm, onConfirm ? 'existe' : 'undefined');
+        console.log('❌ isLoading:', isLoading);
+        
+        if (isLoading) {
+            console.log('❌ Já está carregando, ignorando clique');
+            return;
+        }
+        
         setErro(null);
         try {
-            await onConfirm();
-            // Modal será fechado pelo componente pai após sucesso
+            console.log('❌ CHAMANDO onConfirm()...');
+            const result = await onConfirm();
+            console.log('❌ onConfirm() resolvido:', result);
         } catch (err) {
+            console.error('❌ ERRO em handleConfirm:', err);
             const message = err instanceof Error ? err.message : 'Erro ao candidatar';
             setErro(message);
         }
@@ -35,12 +50,12 @@ export default function CandidatarModal({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-xl shadow-2xl max-w-md w-full">
+        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-[9999] flex items-center justify-center p-4 overflow-hidden" style={{display: 'flex'}}>
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden" style={{maxHeight: '90vh', overflowY: 'auto'}}>
                 {/* Header */}
                 <div className="bg-gradient-to-r from-red-600 to-red-700 border-b-4 border-red-700 px-6 py-4">
                     <div className="flex justify-between items-center">
-                        <h2 className="text-xl font-black text-white">Candidatar-se?</h2>
+                        <h2 className="text-xl font-black text-white">💼 Candidatar-se?</h2>
                         <button
                             onClick={onClose}
                             disabled={isLoading}
@@ -85,9 +100,12 @@ export default function CandidatarModal({
                         </button>
                         <button
                             type="button"
-                            onClick={handleConfirm}
+                            onClick={() => {
+                                console.log('🔴 CLIQUE DETECTADO NO BOTÃO');
+                                handleConfirm();
+                            }}
                             disabled={isLoading}
-                            className="flex-1 px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:from-red-700 hover:to-red-800 disabled:from-gray-400 disabled:to-gray-400 disabled:opacity-50 transition font-semibold"
+                            className="flex-1 px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition font-semibold"
                         >
                             {isLoading ? 'Candidatando...' : 'Confirmar'}
                         </button>

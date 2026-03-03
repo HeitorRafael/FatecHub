@@ -59,14 +59,17 @@ export function useInscricoes() {
 
     // Candidatar a um serviço
     const candidatar = useCallback(async (servicoId: string) => {
+        console.log('useInscricoes.candidatar chamado com servicoId:', servicoId);
         setError(null);
 
         try {
             const token = localStorage.getItem('authToken');
+            console.log('Token obtido:', !!token);
             if (!token) {
                 throw new Error('Token não encontrado');
             }
 
+            console.log('Enviando POST para /api/inscricoes');
             const response = await fetch('/api/inscricoes', {
                 method: 'POST',
                 headers: {
@@ -76,16 +79,20 @@ export function useInscricoes() {
                 body: JSON.stringify({ servicoId }),
             });
 
+            console.log('Response status:', response.status);
             if (!response.ok) {
                 const errorData = await response.json();
+                console.log('Erro da API:', errorData);
                 throw new Error(errorData.error || 'Erro ao candidatar');
             }
 
             const novaInscricao: Inscricao = await response.json();
+            console.log('Inscrição criada:', novaInscricao);
             setInscricoes(prev => [novaInscricao, ...prev]);
             return novaInscricao;
         } catch (err) {
             const message = err instanceof Error ? err.message : 'Erro ao candidatar';
+            console.error('Erro em candidatar:', message);
             setError(message);
             throw err;
         }

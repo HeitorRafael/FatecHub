@@ -91,21 +91,28 @@ export default function EstudanteDashboard() {
     };
 
     const handleOpenCandidatarModal = (servico: any) => {
+        console.log('Abrindo modal para serviço:', servico);
         setCandidaturaSelecionada(servico);
         setIsCandidatarModalOpen(true);
     };
 
     const handleConfirmCandidatura = async () => {
-        if (!candidaturaSelecionada) return;
+        console.log('🔴 handleConfirmCandidatura INÍCIO');
+        if (!candidaturaSelecionada) {
+            console.log('🔴 Nenhum serviço selecionado');
+            return;
+        }
 
+        console.log('🔴 Confirmando candidatura para serviço:', candidaturaSelecionada.id);
         setIsCandidating(true);
         try {
+            console.log('🔴 Chamando candidatar...');
             await candidatar(candidaturaSelecionada.id);
+            console.log('🔴 Candidatura bem-sucedida!');
             setIsCandidatarModalOpen(false);
             setIsSucessoModalOpen(true);
         } catch (err) {
-            console.error('Erro ao candidatar:', err);
-            // Modal de erro é mostrado dentro do CandidatarModal
+            console.error('🔴 ERRO EM handleConfirmCandidatura:', err);
         } finally {
             setIsCandidating(false);
         }
@@ -332,7 +339,10 @@ export default function EstudanteDashboard() {
 
                                         {/* Botão */}
                                         <button
-                                            onClick={() => handleOpenCandidatarModal(servico)}
+                                            onClick={(e) => {
+                                                console.log('Botão clicado');
+                                                handleOpenCandidatarModal(servico);
+                                            }}
                                             disabled={jaSeCandidata(servico.id)}
                                             className={`w-full px-4 py-2 rounded-lg transition font-semibold ${
                                                 jaSeCandidata(servico.id)
